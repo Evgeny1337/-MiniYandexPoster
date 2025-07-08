@@ -252,10 +252,10 @@
     async function loadPlaceInfo(placeId, detailsUrl){
       sidebarApp.selectedPlace = null;
       sidebarApp.loadingPlaceId = placeId;
-
+      console.log("AHAHHA", detailsUrl)
       try {
         let response = await fetch(detailsUrl);
-
+        console.log('response',response)
         if (!response.ok){
           return;
         }
