@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Place, PlaceImage
 from django.utils.safestring import mark_safe
 from adminsortable2.admin import SortableTabularInline, SortableAdminMixin, SortableAdminBase
+from tinymce.widgets import TinyMCE
 
 class PlaceImageInline(SortableTabularInline):
     model = PlaceImage
@@ -20,6 +21,10 @@ class PlaceAdmin(SortableAdminBase,admin.ModelAdmin):
     inlines = [
         PlaceImageInline,
     ]
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['description_long'].widget = TinyMCE()
+        return form
     
 
     
