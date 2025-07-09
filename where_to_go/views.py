@@ -22,7 +22,7 @@ def show_start(request):
                       }
                 })
 
-    print(features)
+
     geojson = {
         "type": "FeatureCollection",
         "features": features
