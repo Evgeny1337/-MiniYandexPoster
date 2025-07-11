@@ -11,6 +11,7 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+    
 
 
 
@@ -25,6 +26,8 @@ class PlaceImage(models.Model):
 
     def __str__(self):
         return str(self.number) + ' ' + self.place.title
+    
+
 
 
 
