@@ -33,7 +33,8 @@ class PlaceImage(models.Model):
 
 
     def __str__(self):
-        return str(self.number) + ' ' + self.place.title
+        return '{} {}'.format(self.number,self.place.title)
+
     
 
 
