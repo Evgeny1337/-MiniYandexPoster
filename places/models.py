@@ -27,6 +27,9 @@ class PlaceImage(models.Model):
         verbose_name='Изображение'
         verbose_name_plural='Изображеня'
         ordering = ['number']
+        indexes = [
+            models.Index(fields=['number'])
+        ]
 
 
     def __str__(self):
