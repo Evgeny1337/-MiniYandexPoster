@@ -8,6 +8,9 @@ class Place(models.Model):
     latitude = models.FloatField(verbose_name='Широта')
     longitude = models.FloatField(verbose_name='Долгота')
     
+    class Meta:
+        verbose_name='Место'
+        verbose_name_plural='Места'
 
     def __str__(self):
         return self.title
@@ -17,10 +20,12 @@ class Place(models.Model):
 
 class PlaceImage(models.Model):
     image = models.ImageField(verbose_name='Картинка')
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images', verbose_name='Место')
     number = models.IntegerField(blank=True,null=True, verbose_name='Позиция', default=0)
 
     class Meta:
+        verbose_name='Изображение'
+        verbose_name_plural='Изображеня'
         ordering = ['number']
 
 
