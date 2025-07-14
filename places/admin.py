@@ -24,6 +24,7 @@ class PlaceAdmin(SortableAdminBase,admin.ModelAdmin):
     inlines = [
         PlaceImageInline,
     ]
+    search_fields = ['title']
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         form.base_fields['description_long'].widget = TinyMCE()
@@ -34,6 +35,7 @@ class PlaceAdmin(SortableAdminBase,admin.ModelAdmin):
 @admin.register(PlaceImage)
 class PlaceImageAdmin(admin.ModelAdmin):
     readonly_fields = ("preview",)
+    autocomplete_fields = ['place']
     def preview(self, obj):
         if obj.image and hasattr(obj.image,'url'):
             img = format_html(f'<img src="{obj.image.url}"  style="max-height:200px" />')
