@@ -32,8 +32,11 @@ def show_start(request):
 
 
 def get_place_by_id(request, place_id):
-    place = get_object_or_404(Place,pk=place_id)
-    place_images = [place_image.image.url for place_image in place.images.all() if place_image != None]
+    place = get_object_or_404(
+        Place.objects.prefetch_related('images'),
+        pk=place_id
+    )
+    place_images = [place_image.image.url for place_image in place.images.all() if place_image ]
     detailsUrl = {
             "title": place.title,
             "imgs": place_images,
@@ -41,7 +44,7 @@ def get_place_by_id(request, place_id):
             "description_long": place.description_long,
             "coordinates": {
                 "lng": place.longitude,
-                "lat": place.latitude
+                "lat": place.latitude 
             }
     }
     return JsonResponse(detailsUrl)
