@@ -11,18 +11,17 @@ def show_start(request):
     for place in places:
         place_details = reverse('place-detail', args=[place.id])
         features.append({
-                "type":"Feature", 
-                 "geometry": { 
-                     "type": "Point",
-                     "coordinates": [place.longitude, place.latitude]
-                     }, 
-                  "properties": {
-                      "title": place.title,
-                      "placeId":f"{place.title}",
-                      "detailsUrl": place_details 
-                      }
-                })
-
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [place.longitude, place.latitude]
+            },
+            "properties": {
+                "title": place.title,
+                "placeId": f"{place.title}",
+                "detailsUrl": place_details
+            }
+        })
 
     geojson = {
         "type": "FeatureCollection",
@@ -36,16 +35,16 @@ def get_place_by_id(request, place_id):
         Place.objects.prefetch_related('images'),
         pk=place_id
     )
-    place_images = [place_image.image.url for place_image in place.images.all() if place_image ]
+    place_images = [
+        place_image.image.url for place_image in place.images.all() if place_image]
     place_details = {
-            "title": place.title,
-            "imgs": place_images,
-            "description_short": place.description_short,
-            "description_long": place.description_long,
-            "coordinates": {
-                "lng": place.longitude,
-                "lat": place.latitude 
-            }
+        "title": place.title,
+        "imgs": place_images,
+        "description_short": place.description_short,
+        "description_long": place.description_long,
+        "coordinates": {
+            "lng": place.longitude,
+            "lat": place.latitude
+        }
     }
     return JsonResponse(place_details)
-   
