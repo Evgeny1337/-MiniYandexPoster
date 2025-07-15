@@ -9,7 +9,7 @@ def show_start(request):
     places = Place.objects.prefetch_related('images').all()
     features = []
     for place in places:
-        details_url = reverse('place-detail', args=[place.id])
+        place_details = reverse('place-detail', args=[place.id])
         features.append({
                 "type":"Feature", 
                  "geometry": { 
@@ -19,7 +19,7 @@ def show_start(request):
                   "properties": {
                       "title": place.title,
                       "placeId":f"{place.title}",
-                      "detailsUrl": details_url 
+                      "detailsUrl": place_details 
                       }
                 })
 
@@ -37,7 +37,7 @@ def get_place_by_id(request, place_id):
         pk=place_id
     )
     place_images = [place_image.image.url for place_image in place.images.all() if place_image ]
-    detailsUrl = {
+    place_details = {
             "title": place.title,
             "imgs": place_images,
             "description_short": place.description_short,
@@ -47,5 +47,5 @@ def get_place_by_id(request, place_id):
                 "lat": place.latitude 
             }
     }
-    return JsonResponse(detailsUrl)
+    return JsonResponse(place_details)
    
