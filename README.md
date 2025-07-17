@@ -1,40 +1,32 @@
 
 # Туристические места на карте (Django проект)
 
-  
-
 Проект отображает на интерактивной карте туристические локации с описанием и фотографиями.
 
 Пользователи могут просматривать места, их описания и изображения.
 
-  
-
-## Требования
+# Требования
 
 - Python 3.13
 
 - Установленные зависимости из `requirements.txt`
 
-  
-
-## Установка
-
-  
+# Установка
 
 1. Клонируйте репозиторий:
 
 ```bash
-git  clone  https://github.com/ваш-проект/репозиторий.git
+git  clone  https: // github.com / ваш - проект / репозиторий.git
 
-cd  ваш-проект
+cd  ваш - проект
 ```
 
 2. Создайте и активируйте виртуальное окружение:
 
 ```bash
-python3.13  -m  venv  venv
+python3.13 - m  venv  venv
 
-source  venv/bin/activate  # Linux/macOS
+source  venv / bin / activate  # Linux/macOS
 
 venv\Scripts\activate  # Windows
 ```
@@ -47,16 +39,13 @@ pip  install  -r  requirements.txt
 
 4. Создайте файл `.env` в корне проекта со следующим содержимым:
 
-  
-
 # Уникальный ключ для криптографических операций (сессии, CSRF)
 
-# Сгенерировать: https://djecrety.ir/
+# Сгенерировать: <https://djecrety.ir/>
 
 ```ini
 SECRET_KEY=ваш_секретный_ключ
 ```
-
 
 # Режим отладки (True - показывать детали ошибок, False - продакшен)
 
@@ -82,28 +71,16 @@ python  manage.py  load_place <URL_JSON_файла>
 
 ```json
 {
-
-"title": "Название места",
-
-"imgs": [
-
-"https://url-изображения1.jpg",
-
-"https://url-изображения2.jpg"
-
-],
-
-"description_short": "Краткое описание",
-
-"description_long": "<p>Длинное описание в HTML</p>",
-
-"coordinates": {
-
-"lng": "37.630320",
-
-"lat": "55.734369"
-
-}
-
+  "title": "Название места",
+  "imgs": [
+    "https://url-изображения1.jpg",
+    "https://url-изображения2.jpg"
+  ],
+  "description_short": "Краткое описание",
+  "description_long": "<p>Длинное описание в HTML</p>",
+  "coordinates": {
+    "lng": "37.630320",
+    "lat": "55.734369"
+  }
 }
 ```
