@@ -6,10 +6,10 @@ from places.models import Place
 
 
 def show_start(request):
-    places = Place.objects.prefetch_related('images').all()
+    places = Place.objects.prefetch_related("images").all()
     features = []
     for place in places:
-        place_details = reverse('place-detail', args=[place.id])
+        place_details = reverse("place-detail", args=[place.id])
         features.append({
             "type": "Feature",
             "geometry": {
@@ -27,12 +27,12 @@ def show_start(request):
         "type": "FeatureCollection",
         "features": features
     }
-    return render(request, 'index.html', {'geojson': geojson})
+    return render(request, "index.html", {"geojson": geojson})
 
 
 def get_place_by_id(request, place_id):
     place = get_object_or_404(
-        Place.objects.prefetch_related('images'),
+        Place.objects.prefetch_related("images"),
         pk=place_id
     )
     place_images = [

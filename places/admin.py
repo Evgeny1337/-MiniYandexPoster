@@ -15,9 +15,7 @@ class PlaceImageInline(SortableTabularInline):
 
     def preview(self, obj):
         if obj.image and hasattr(obj.image, 'url'):
-            img = format_html(
-                f'<img src="{
-                    obj.image.url}" style="max-height:200px;max-width:200px"  />')
+            img = format_html('<img src="{}" style="max-height:200px;max-width:200px"/>', obj.image.url)
             return img
         return "Изображение отсутсвует"
     preview.short_description = "Превью"
@@ -43,9 +41,7 @@ class PlaceImageAdmin(admin.ModelAdmin):
 
     def preview(self, obj):
         if obj.image and hasattr(obj.image, 'url'):
-            img = format_html(
-                f'<img src="{
-                    obj.image.url}" style="max-height:200px;max-width:200px" />')
+            img = format_html('<img src="{}" style="max-height:200px;max-width:200px"/>', obj.image.url)
             return img
         return "Изображение отсутсвует"
     preview.short_description = "Превью"

@@ -6,7 +6,7 @@ from io import BytesIO
 from PIL import Image
 
 class Command(BaseCommand):
-    help = 'The Zen of Python'
+    help = 'Загрузчик туристических мест'
 
     def add_arguments(self, parser):
         parser.add_argument("url",type=str)
