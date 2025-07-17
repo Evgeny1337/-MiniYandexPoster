@@ -15,6 +15,7 @@ class Command(BaseCommand):
         if options['url']:
             try:
                 place_response = requests.get(url=options['url'])
+                place_response.raise_for_status()
                 place_details = place_response.json()
                 image_urls = place_details['imgs']
                 title = place_details['title']
@@ -47,31 +48,29 @@ class Command(BaseCommand):
     def create_placeimage(self,place,url,number):
         try:
             image = requests.get(url)
+            image.raise_for_status()
             filename = f"{place.id}_{number}.jpg"
-            if not PlaceImage.objects.filter(place=place,number=number).exists():
-                image_content = ContentFile(image.content, name=filename)
-                PlaceImage.objects.create(
-                    image=image_content,
-                    number=number,
-                    place=place
-                )
+            PlaceImage.objects.get_or_create(
+                place=place,
+                number=number,
+                defaults={
+                    'image': ContentFile(image.content, name=filename)
+                }
+            )
         except requests.exceptions.RequestException as err:
             self.stdout.write(f"Ошибка  при скачивание изображения {err}")
         
 
-    def create_place(self,title,description_short,description_long,latitude,longitude):
-        place = Place.objects.filter(
-                title=title,
-                latitude=latitude,
-                longitude=longitude
-                ).first()
-        if place:
-            return place
-        return Place.objects.create(
+    def create_place(self,title,short_description,long_description,latitude,longitude):
+        place, created = Place.objects.get_or_create(
             title=title,
-            description_short=description_short,
-            description_long=description_long,
             latitude=latitude,
-            longitude=longitude
+            longitude=longitude,
+            defaults={
+                "short_description":short_description,
+                "long_description":long_description
+            }
         )
+        return place
+
 
