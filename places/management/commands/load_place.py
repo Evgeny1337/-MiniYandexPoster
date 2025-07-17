@@ -18,15 +18,15 @@ class Command(BaseCommand):
                 place_details = place_response.json()
                 image_urls = place_details['imgs']
                 title = place_details['title']
-                description_short = place_details['description_short']
-                description_long = place_details['description_long']
+                short_description = place_details['short_description']
+                long_description = place_details['long_description']
                 coordinates = place_details['coordinates']
                 latitude = coordinates['lat']
                 longitude = coordinates['lng']
                 place = self.create_place(
                     title=title,
-                    description_short=description_short,
-                    description_long=description_long,
+                    description_short=short_description,
+                    description_long=long_description,
                     latitude=latitude,
                     longitude=longitude
                 )

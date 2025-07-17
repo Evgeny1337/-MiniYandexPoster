@@ -1,9 +1,10 @@
+from adminsortable2.admin import SortableAdminBase, SortableTabularInline
 from django.contrib import admin
-from .models import Place, PlaceImage
-from django.utils.safestring import mark_safe
 from django.utils.html import format_html
-from adminsortable2.admin import SortableTabularInline, SortableAdminBase
+from django.utils.safestring import mark_safe
 from tinymce.widgets import TinyMCE
+
+from .models import Place, PlaceImage
 
 
 class PlaceImageInline(SortableTabularInline):
@@ -16,7 +17,7 @@ class PlaceImageInline(SortableTabularInline):
         if obj.image and hasattr(obj.image, 'url'):
             img = format_html(
                 f'<img src="{
-                    obj.image.url}" style="max-height:200px" />')
+                    obj.image.url}" style="max-height:200px;max-width:200px"  />')
             return img
         return "Изображение отсутсвует"
     preview.short_description = "Превью"
@@ -44,7 +45,7 @@ class PlaceImageAdmin(admin.ModelAdmin):
         if obj.image and hasattr(obj.image, 'url'):
             img = format_html(
                 f'<img src="{
-                    obj.image.url}"  style="max-height:200px" />')
+                    obj.image.url}" style="max-height:200px;max-width:200px" />')
             return img
         return "Изображение отсутсвует"
     preview.short_description = "Превью"
