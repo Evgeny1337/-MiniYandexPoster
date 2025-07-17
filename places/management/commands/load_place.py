@@ -1,15 +1,14 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.core.files.base import ContentFile
-from places.models import Place, PlaceImage
 import requests
-from io import BytesIO
-from PIL import Image
+from django.core.files.base import ContentFile
+from django.core.management.base import BaseCommand
+from places.models import Place, PlaceImage
+
 
 class Command(BaseCommand):
     help = 'Загрузчик туристических мест'
 
     def add_arguments(self, parser):
-        parser.add_argument("url",type=str)
+        parser.add_argument("url", type=str)
 
     def handle(self, *args, **options):
         if options['url']:
@@ -32,7 +31,7 @@ class Command(BaseCommand):
                     longitude=longitude
                 )
                 if place:
-                    for number,image_url in enumerate(image_urls):
+                    for number, image_url in enumerate(image_urls):
                         self.create_placeimage(
                             place=place,
                             url=image_url,
@@ -45,7 +44,7 @@ class Command(BaseCommand):
         else:
             self.stdout.write("Вы не передали url")
 
-    def create_placeimage(self,place,url,number):
+    def create_placeimage(self, place, url, number):
         try:
             image = requests.get(url)
             image.raise_for_status()
@@ -59,18 +58,21 @@ class Command(BaseCommand):
             )
         except requests.exceptions.RequestException as err:
             self.stdout.write(f"Ошибка  при скачивание изображения {err}")
-        
 
-    def create_place(self,title,short_description,long_description,latitude,longitude):
+    def create_place(
+            self,
+            title,
+            short_description,
+            long_description,
+            latitude,
+            longitude):
         place, created = Place.objects.get_or_create(
             title=title,
             latitude=latitude,
             longitude=longitude,
             defaults={
-                "short_description":short_description,
-                "long_description":long_description
+                "short_description": short_description,
+                "long_description": long_description
             }
         )
         return place
-
-
