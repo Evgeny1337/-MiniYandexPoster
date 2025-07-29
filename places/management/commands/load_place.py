@@ -23,12 +23,14 @@ class Command(BaseCommand):
                 coordinates = place_details['coordinates']
                 latitude = coordinates['lat']
                 longitude = coordinates['lng']
-                place = self.create_place(
+                place, created = Place.objects.get_or_create(
                     title=title,
-                    description_short=short_description,
-                    description_long=long_description,
                     latitude=latitude,
-                    longitude=longitude
+                    longitude=longitude,
+                    defaults={
+                        "short_description": short_description,
+                        "long_description": long_description
+                    }
                 )
                 if place:
                     for number, image_url in enumerate(image_urls):
@@ -59,20 +61,3 @@ class Command(BaseCommand):
         except requests.exceptions.RequestException as err:
             self.stdout.write(f"Ошибка  при скачивание изображения {err}")
 
-    def create_place(
-            self,
-            title,
-            short_description,
-            long_description,
-            latitude,
-            longitude):
-        place, created = Place.objects.get_or_create(
-            title=title,
-            latitude=latitude,
-            longitude=longitude,
-            defaults={
-                "short_description": short_description,
-                "long_description": long_description
-            }
-        )
-        return place
