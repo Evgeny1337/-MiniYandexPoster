@@ -5,24 +5,24 @@ from places.models import Place, PlaceImage
 
 
 class Command(BaseCommand):
-    help = 'Загрузчик туристических мест'
+    help = "Загрузчик туристических мест"
 
     def add_arguments(self, parser):
         parser.add_argument("url", type=str)
 
     def handle(self, *args, **options):
-        if options['url']:
+        if options["url"]:
             try:
-                place_response = requests.get(url=options['url'])
+                place_response = requests.get(url=options["url"])
                 place_response.raise_for_status()
                 place_details = place_response.json()
-                image_urls = place_details['imgs']
-                title = place_details['title']
-                short_description = place_details['short_description']
-                long_description = place_details['long_description']
-                coordinates = place_details['coordinates']
-                latitude = coordinates['lat']
-                longitude = coordinates['lng']
+                image_urls = place_details["imgs"]
+                title = place_details["title"]
+                short_description = place_details["description_short"]
+                long_description = place_details["description_long"]
+                coordinates = place_details["coordinates"]
+                latitude = coordinates["lat"]
+                longitude = coordinates["lng"]
                 place, created = Place.objects.get_or_create(
                     title=title,
                     latitude=latitude,
@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 place=place,
                 number=number,
                 defaults={
-                    'image': ContentFile(image.content, name=filename)
+                    "image": ContentFile(image.content, name=filename)
                 }
             )
         except requests.exceptions.RequestException as err:
