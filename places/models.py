@@ -25,7 +25,7 @@ class PlaceImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images',
         verbose_name='Место')
-    number = models.IntegerField(blank=True, null=True, verbose_name='Позиция')
+    number = models.IntegerField(default=0, verbose_name='Позиция')
 
     class Meta:
         verbose_name = 'Изображение'
